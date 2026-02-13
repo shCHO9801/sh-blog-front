@@ -61,5 +61,12 @@ jobs:
             set -e
             cd "${{ env.DEPLOY_DIR }}/deploy"
 
+            # 기존 컨테이너 정리 (이름 충돌 방지)
+            docker compose down --remove-orphans || true
+            docker rm -f shblog-frontend 2>/dev/null || true
+
+            # 재기동
             docker compose up -d --build --remove-orphans
+
             docker image prune -f
+
