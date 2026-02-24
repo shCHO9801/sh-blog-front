@@ -15,21 +15,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { nickname } = await params;
 
   try {
-    const data = await fetchPublicBlog(nickname);
+    const blog = await fetchPublicBlog(nickname);
     return {
-      title: data.title,
-      description: data.intro,
+      title: blog.title,
+      description: blog.intro,
       openGraph: {
-        title: data.title,
-        description: data.intro,
-        images: data.bannerImageUrl ? [data.bannerImageUrl] : [],
+        title: blog.title,
+        description: blog.intro,
+        images: blog.bannerImageUrl ? [blog.bannerImageUrl] : [],
       },
     };
   } catch {
-    return {
-      title: "ShBlog",
-      description: "Black & White minimal blog",
-    };
+    return { title: "ShBlog", description: "Black & White minimal blog" };
   }
 }
 
@@ -49,7 +46,7 @@ export default async function BlogHomePage({ params }: Props) {
         <div className="mt-8 grid gap-6 lg:grid-cols-[1fr_280px]">
           <div className="space-y-6">
             <Banner imageUrl={blog.bannerImageUrl} />
-            <PostGrid posts={posts} />
+            <PostGrid nickname={nickname} posts={posts} />
           </div>
 
           <ProfileCard
@@ -64,9 +61,7 @@ export default async function BlogHomePage({ params }: Props) {
       </Shell>
     );
   } catch (e) {
-    if (e instanceof ApiError && e.code === "BLOG_001") {
-      notFound();
-    }
+    if (e instanceof ApiError && e.code === "BLOG_001") notFound();
     throw e;
   }
 }

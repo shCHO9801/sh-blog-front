@@ -1,5 +1,5 @@
 import { request } from "@/app/lib/request";
-import type { PageResponse, PublicPostItem, PostRecentTumbniail } from "@/app/types/post";
+import type { PageResponse, PostRecentTumbniail, PublicPostDetail, PublicPostItem } from "@/app/types/post";
 
 export function fetchPublicPosts(nickname: string) {
     return request<PageResponse<PublicPostItem>>(
@@ -9,6 +9,17 @@ export function fetchPublicPosts(nickname: string) {
 
 export function fetchPostRecentTumbniail(nickname: string): Promise<PostRecentTumbniail[]> {
     return request<PostRecentTumbniail[]>(
-    `/api/posts/public/${encodeURIComponent(nickname)}/thumbnails`
-  );
+        `/api/posts/public/${encodeURIComponent(nickname)}/thumbnails`
+    );
+}
+
+export function fetchPublicPostDetail(
+    nickname: string,
+    postId: string
+): Promise<PublicPostDetail> {
+    return request<PublicPostDetail>(
+        `/api/posts/public/${encodeURIComponent(
+            nickname
+        )}/posts/${encodeURIComponent(postId)}`
+    );
 }

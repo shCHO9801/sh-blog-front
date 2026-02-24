@@ -21,3 +21,13 @@ export type PostRecentTumbniail = {
     categoryName: string;
     createdAt: string;
 }
+
+export type PublicPostDetail = {
+    postId: number;
+    categoryId: number;
+    title: string;
+    content: string;
+    isPublic: boolean;
+    createdAt: string;
+    updatedAt: string;
+};

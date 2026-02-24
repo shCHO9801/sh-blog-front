@@ -1,46 +1,13 @@
-// import type { PublicPostItem } from "@/app/types/post";
-
-// type Props = {
-//     posts: PublicPostItem[];
-// };
-
-// export default function PostGrid({ posts }: Props) {
-//     if (posts.length === 0) {
-//         return (
-//             <div className="rounded-2xl border border-neutral-200 p-6 text-center text-neutral-500">
-//                 아직 작성된 글이 없습니다.
-//             </div>
-//         );
-//     }
-
-//     return (
-//         <div className="grid gap-4 md:grid-cols-2">
-//             {posts.map((post) => (
-//                 <article
-//                     key={post.postId}
-//                     className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm transition hover:border-black"
-//                 >
-//                     <div className="text-xs text-neutral-500">
-//                         {new Date(post.createdAt).toLocaleDateString()}
-//                     </div>
-
-//                     <div className="mt-2 text-lg font-semibold">
-//                         {post.title}
-//                     </div>
-//                 </article>
-//             ))}
-//         </div>
-//     );
-// }
-
-import type { PostRecentTumbniail } from "@/app/types/post";
 import { formatDateYmdDot } from "@/app/lib/format";
+import type { PostRecentTumbniail } from "@/app/types/post";
+import Link from "next/link";
 
 type Props = {
+  nickname: string;
   posts: PostRecentTumbniail[];
 };
 
-export default function PostGrid({ posts }: Props) {
+export default function PostGrid({ nickname, posts }: Props) {
   return (
     <section>
       <div className="flex items-end justify-between">
@@ -50,25 +17,26 @@ export default function PostGrid({ posts }: Props) {
 
       <div className="mt-4 grid gap-4 md:grid-cols-2">
         {posts.map((post) => (
-          <article
+          <Link
             key={post.postId}
-            className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm transition hover:border-black"
+            href={`/${encodeURIComponent(nickname)}/posts/${post.postId}`}
+            className="block"
           >
-            <div className="flex items-center justify-between text-xs text-neutral-500">
-              <span>{post.categoryName}</span>
-              <span>{formatDateYmdDot(post.createdAt)}</span>
-            </div>
+            <article className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm transition hover:border-black">
+              <div className="flex items-center justify-between text-xs text-neutral-500">
+                <span>{post.categoryName}</span>
+                <span>{formatDateYmdDot(post.createdAt)}</span>
+              </div>
 
-            <h3 className="mt-2 text-lg font-semibold">
-              {post.title}
-            </h3>
+              <h3 className="mt-2 text-lg font-semibold">{post.title}</h3>
 
-            {post.summary && (
-              <p className="mt-2 text-sm leading-relaxed text-neutral-700 line-clamp-2">
-                {post.summary}
-              </p>
-            )}
-          </article>
+              {post.summary && (
+                <p className="mt-2 text-sm leading-relaxed text-neutral-700 line-clamp-2">
+                  {post.summary}
+                </p>
+              )}
+            </article>
+          </Link>
         ))}
       </div>
     </section>
