@@ -1,13 +1,14 @@
 import Banner from "@/app/components/Banner";
+import CategoryNav from "@/app/components/CategoryNav";
 import Header from "@/app/components/Header";
+import PostGrid from "@/app/components/PostGrid";
 import ProfileCard from "@/app/components/ProfileCard";
 import Shell from "@/app/components/Shell";
-import PostGrid from "@/app/components/PostGrid";
 import { fetchPublicBlog } from "@/app/lib/blogApi";
 import { fetchPostRecentTumbniail } from "@/app/lib/postApi";
-import { notFound } from "next/navigation";
-import type { Metadata } from "next";
 import { ApiError } from "@/types/error";
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 type Props = { params: Promise<{ nickname: string }> };
 
@@ -49,10 +50,13 @@ export default async function BlogHomePage({ params }: Props) {
             <PostGrid nickname={nickname} posts={posts} />
           </div>
 
-          <ProfileCard
-            nickname={blog.userNickName}
-            profileImageUrl={blog.userProfileImageUrl}
-          />
+          <aside className="space-y-6">
+            <ProfileCard
+              nickname={blog.userNickName}
+              profileImageUrl={blog.userProfileImageUrl}
+            />
+            <CategoryNav nickname={nickname} />
+          </aside>
         </div>
 
         <footer className="mt-16 border-t border-neutral-200 pt-6 text-xs text-neutral-500">
