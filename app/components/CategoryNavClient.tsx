@@ -1,6 +1,6 @@
 "use client";
 
-import type { CategoryNode } from "@/types/category";
+import type { CategoryNode } from "@/app/types/category";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export default function CategoryNavClient({
@@ -18,27 +18,37 @@ export default function CategoryNavClient({
     const goCategory = (categoryId: number) =>
         router.push(`/${nickname}/posts?categoryId=${categoryId}`);
 
+    const itemBase =
+        "w-full text-left text-sm rounded-md px-2 py-1 transition outline-none";
+    const itemHover =
+        "hover:bg-neutral-50 focus-visible:bg-neutral-50 focus-visible:ring-1 focus-visible:ring-neutral-300";
+    const itemActive = "bg-neutral-100 font-semibold text-neutral-900";
+    const itemNormal = "text-neutral-700";
+
+    const childNormal = "text-neutral-600";
+    const childActive = "bg-neutral-100 font-semibold text-neutral-900";
+
     return (
         <nav className="rounded-xl border border-neutral-200 bg-white p-4">
             <div className="mb-3">
                 <h2 className="text-sm font-semibold text-neutral-900">Categories</h2>
             </div>
 
-            {/* ✅ 전체 포스트: 박스 제거, 텍스트 버튼 */}
+            {/* 전체 포스트 */}
             <button
                 type="button"
                 onClick={goAll}
                 className={[
-                    "mb-4 w-full text-left text-sm",
-                    activeId === null
-                        ? "font-semibold text-neutral-900"
-                        : "text-neutral-700 hover:text-neutral-900",
+                    "mb-4",
+                    itemBase,
+                    itemHover,
+                    activeId === null ? itemActive : itemNormal,
                 ].join(" ")}
             >
                 전체 포스트
             </button>
 
-            {/* ✅ 부모 간격 조금 */}
+            {/* 부모 간격 조금 */}
             <ul className="space-y-4">
                 {categories.map((parent) => {
                     const hasChildren = (parent.children?.length ?? 0) > 0;
@@ -53,10 +63,9 @@ export default function CategoryNavClient({
                                     type="button"
                                     onClick={() => goCategory(parent.id)}
                                     className={[
-                                        "w-full text-left text-sm",
-                                        isActive
-                                            ? "font-semibold text-neutral-900"
-                                            : "text-neutral-700 hover:text-neutral-900",
+                                        itemBase,
+                                        itemHover,
+                                        isActive ? itemActive : itemNormal,
                                     ].join(" ")}
                                 >
                                     {parent.name}
@@ -67,25 +76,25 @@ export default function CategoryNavClient({
 
                     return (
                         <li key={parent.id}>
-                            {/* ✅ 부모: 전체 포스트와 같은 글자 형태(텍스트) + 클릭 불가 */}
-                            <div className="w-full text-left text-sm text-neutral-700">
+                            {/* ✅ 부모(클릭 불가) */}
+                            <div className="w-full text-left text-sm text-neutral-700 px-2">
                                 {parent.name}
                             </div>
 
                             {/* ✅ 자식: 항상 노출 */}
                             <ul className="mt-2 space-y-1 border-l border-neutral-200 pl-3">
                                 {parent.children.map((child) => {
-                                    const childActive = activeId === String(child.id);
+                                    const isChildActive = activeId === String(child.id);
+
                                     return (
                                         <li key={child.id}>
                                             <button
                                                 type="button"
                                                 onClick={() => goCategory(child.id)}
                                                 className={[
-                                                    "w-full text-left text-sm",
-                                                    childActive
-                                                        ? "font-semibold text-neutral-900"
-                                                        : "text-neutral-600 hover:text-neutral-900",
+                                                    itemBase,
+                                                    itemHover,
+                                                    isChildActive ? childActive : childNormal,
                                                 ].join(" ")}
                                             >
                                                 {child.name}

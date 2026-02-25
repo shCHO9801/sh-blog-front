@@ -3,6 +3,7 @@ export type PublicPostItem = {
     title: string;
     isPublic: boolean;
     createdAt: string;
+    categoryName?: string;
 };
 
 export type PageResponse<T> = {
