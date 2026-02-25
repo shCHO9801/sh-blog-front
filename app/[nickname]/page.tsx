@@ -10,7 +10,13 @@ import { ApiError } from "@/types/error";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-type Props = { params: Promise<{ nickname: string }> };
+type Props = {
+  params: Promise<{ nickname: string }>;
+  searchParams: {
+    categoryId?: string;
+    page?: string;
+  };
+};
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { nickname } = await params;
