@@ -1,5 +1,5 @@
 import { request } from "@/app/lib/request";
-import type { CategoryNode } from "@/types/category";
+import type { CategoryNode } from "@/app/types/category";
 
 type RawCategory = {
     categoryId: number;
