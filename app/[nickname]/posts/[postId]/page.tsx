@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { nickname, postId } = await params;
 
   try {
-    const data = await fetchPublicPostDetail(nickname, Number(postId));
+    const data = await fetchPublicPostDetail(nickname, postId);
     const desc = data.content ? data.content.slice(0, 140) : "";
     return {
       title: data.title,
@@ -31,7 +31,7 @@ export default async function PostDetailPage({ params }: Props) {
   const { nickname, postId } = await params;
 
   try {
-    const post = await fetchPublicPostDetail(nickname, Number(postId));
+    const post = await fetchPublicPostDetail(nickname, postId);
 
     return (
       <Shell>
