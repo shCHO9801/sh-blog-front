@@ -1,12 +1,15 @@
+import AuthStatus from "@/app/components/AuthStatus";
 import Link from "next/link";
 
-type Props = {
+export default function Header({
+  title,
+  intro,
+  homeHref,
+}: {
   title: string;
   intro: string;
   homeHref?: string;
-};
-
-export default function Header({ title, intro, homeHref }: Props) {
+}) {
   return (
     <header className="flex items-start justify-between gap-6">
       <div className="flex-1">
@@ -25,6 +28,11 @@ export default function Header({ title, intro, homeHref }: Props) {
         <p className="mt-3 max-w-2xl text-base leading-relaxed text-neutral-700">
           {intro}
         </p>
+      </div>
+
+      {/* ✅ 우측 상단 로그인/닉네임/로그아웃 */}
+      <div className="pt-1">
+        <AuthStatus />
       </div>
     </header>
   );
