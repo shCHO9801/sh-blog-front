@@ -1,53 +1,5 @@
-// app/lib/categoryApi.ts
-import { request } from "@/app/lib/request";
+// app/lib/categoryApi.me.ts
 import { requestAuth } from "@/app/lib/requestAuth";
-import type { CategoryNode as PublicCategoryNode } from "@/app/types/category";
-
-/* =========================
- * Public (Blog / CategoryNav)
- * - Server Component에서 호출
- * - 토큰/Authorization 사용 금지
- * ========================= */
-
-type RawPublicCategory = {
-    categoryId: number;
-    name: string;
-    description?: string;
-    children: Array<{
-        id: number; // child는 id
-        name: string;
-        description?: string;
-    }>;
-};
-
-function normalizePublic(raw: RawPublicCategory[]): PublicCategoryNode[] {
-    return raw.map((c) => ({
-        id: c.categoryId,
-        name: c.name,
-        description: c.description,
-        children: (c.children ?? []).map((ch) => ({
-            id: ch.id,
-            name: ch.name,
-            description: ch.description,
-            children: [],
-        })),
-    }));
-}
-
-export async function fetchPublicCategoriesTree(
-    nickname: string
-): Promise<PublicCategoryNode[]> {
-    const data = await request<RawPublicCategory[]>(
-        `/api/category/public/${encodeURIComponent(nickname)}`
-    );
-    return normalizePublic(data);
-}
-
-/* =========================
- * Me (MyPage / Category Manage)
- * - Client Component에서 호출
- * - requestAuth 사용
- * ========================= */
 
 export type CategoryTreeResponse = Array<{
     categoryId: number; // root id
@@ -64,8 +16,8 @@ export type CategoryNode = {
     id: number;
     name: string;
     description: string;
-    parentId: number | null; // null means root
-    rootId: number; // root group id
+    parentId: number | null;
+    rootId: number;
     isRoot: boolean;
 };
 
@@ -131,11 +83,7 @@ export async function createCategory(input: {
 
 export async function updateCategory(
     id: number,
-    input: {
-        name: string;
-        description: string;
-        parentId: number | null;
-    }
+    input: { name: string; description: string; parentId: number | null }
 ) {
     return requestAuth<any>(api(`/api/category/me/${id}`), {
         method: "PATCH",
