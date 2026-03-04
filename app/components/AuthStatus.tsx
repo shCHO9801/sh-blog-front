@@ -1,6 +1,11 @@
 "use client";
 
-import { clearAuth, getAccessToken, getNickname, isTokenExpired } from "@/app/lib/authStorage";
+import {
+    clearAuth,
+    getAccessToken,
+    getNickname,
+    isTokenExpired,
+} from "@/app/lib/authStorage";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -37,12 +42,20 @@ export default function AuthStatus() {
     }
 
     return (
-        <div className="flex items-center gap-3">
-            <span className="text-xs text-neutral-700">{nickname}</span>
+        <div className="flex items-center gap-3 text-xs">
+            <span className="text-neutral-700">{nickname}</span>
+
+            <Link
+                href="/mypage"
+                className="text-neutral-600 hover:text-neutral-900 hover:underline"
+            >
+                내 정보
+            </Link>
+
             <button
                 type="button"
                 onClick={onLogout}
-                className="text-xs text-neutral-600 hover:text-neutral-900"
+                className="text-neutral-600 hover:text-neutral-900"
             >
                 Logout
             </button>
