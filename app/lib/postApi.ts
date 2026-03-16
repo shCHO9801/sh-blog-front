@@ -1,3 +1,4 @@
+// app/lib/postApi.ts
 import { request } from "@/app/lib/request";
 import type {
     PageResponse,
@@ -34,7 +35,6 @@ export function fetchPublicPosts(
     );
 }
 
-// 아래는 그대로 유지
 export function fetchPostRecentTumbniail(
     nickname: string
 ): Promise<PostRecentTumbniail[]> {

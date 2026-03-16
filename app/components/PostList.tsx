@@ -1,3 +1,4 @@
+// app/components/PostList.tsx
 import { formatDateYmdDot } from "@/app/lib/format";
 import type { PublicPostItem } from "@/app/types/post";
 import Link from "next/link";

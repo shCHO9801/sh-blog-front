@@ -1,3 +1,4 @@
+// app/[nickname]/posts/page.tsx
 import CategoryNav from "@/app/components/CategoryNav";
 import Header from "@/app/components/Header";
 import PostList from "@/app/components/PostList";
@@ -7,6 +8,7 @@ import { fetchPublicBlog } from "@/app/lib/blogApi";
 import { fetchPublicPosts } from "@/app/lib/postApi";
 import { ApiError } from "@/types/error";
 import { notFound } from "next/navigation";
+import CategoryCreateButton from "./CategoryCreateButton";
 
 type Props = {
     params: Promise<{ nickname: string }>;
@@ -38,6 +40,10 @@ export default async function PostsPage({ params, searchParams }: Props) {
                     intro={categoryId ? (categoryName ?? "카테고리") : "전체 포스트"}
                     homeHref={`/${nickname}`}
                 />
+
+                <div className="mt-6 flex justify-end">
+                    <CategoryCreateButton categoryId={categoryId} />
+                </div>
 
                 <div className="mt-8 grid gap-6 lg:grid-cols-[1fr_280px]">
                     {/* 좌측: 목록 */}

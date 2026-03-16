@@ -46,6 +46,13 @@ export default function AuthStatus() {
             <span className="text-neutral-700">{nickname}</span>
 
             <Link
+                href="/admin/posts"
+                className="text-neutral-600 hover:text-neutral-900 hover:underline"
+            >
+                글 관리
+            </Link>
+            
+            <Link
                 href="/mypage"
                 className="text-neutral-600 hover:text-neutral-900 hover:underline"
             >
