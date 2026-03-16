@@ -1,3 +1,4 @@
+// app/types/post.ts
 export type PublicPostItem = {
     postId: number;
     title: string;
@@ -31,4 +32,33 @@ export type PublicPostDetail = {
     isPublic: boolean;
     createdAt: string;
     updatedAt: string;
+};
+
+export type MyPostItem = {
+    postId: number;
+    categoryName: string;
+    title: string;
+    isPublic: boolean;
+    createdAt: string;
+};
+
+export type MyPostDetail = {
+    postId: number;
+    categoryId: number;
+    title: string;
+    content: string;
+    isPublic: boolean;
+    createdAt: string;
+    updatedAt: string;
+};
+
+export type CreatePostRequest = {
+    title: string;
+    content: string;
+    categoryId: number;
+    isPublic: boolean;
+};
+
+export type UploadImageResponse = {
+    url: string;
 };

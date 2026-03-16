@@ -1,3 +1,4 @@
+// app/components/CategoryNav.tsx
 import CategoryNavClient from "@/app/components/CategoryNavClient";
 import { fetchPublicCategoriesTree } from "@/app/lib/categoryApi.public";
 
